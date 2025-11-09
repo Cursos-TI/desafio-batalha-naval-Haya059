@@ -3,6 +3,48 @@
 #define LINHAS 10
 #define COLUNAS 10
 
+// Desenha um "octaedro" (manhattan <= tamanho) marcando com 1
+void desenharOctaedro(int tabuleiro[LINHAS][COLUNAS], int centroLinha, int centroColuna, int tamanho) {
+    for (int i = -tamanho; i <= tamanho; i++) {
+        for (int j = -tamanho; j <= tamanho; j++) {
+            if (abs(i) + abs(j) <= tamanho) {
+                int linha = centroLinha + i;
+                int coluna = centroColuna + j;
+                if (linha >= 0 && linha < LINHAS && coluna >= 0 && coluna < COLUNAS) {
+                    tabuleiro[linha][coluna] = 1; // Marca a área atingida
+                }
+            }
+        }
+    }
+}
+
+// Desenha uma cruz centrada marcando com 1
+void desenharCruz(int tabuleiro[LINHAS][COLUNAS], int centroLinha, int centroColuna, int tamanho) {
+    for (int i = -tamanho; i <= tamanho; i++) {
+        int linhaVertical = centroLinha + i;
+        int colunaHorizontal = centroColuna + i;
+        if (linhaVertical >= 0 && linhaVertical < LINHAS) {
+            tabuleiro[linhaVertical][centroColuna] = 1; // Vertical
+        }
+        if (colunaHorizontal >= 0 && colunaHorizontal < COLUNAS) {
+            tabuleiro[centroLinha][colunaHorizontal] = 1; // Horizontal
+        }
+    }
+}
+
+// Desenha um cone "para baixo" com altura marcando com 1
+void desenharCone(int tabuleiro[LINHAS][COLUNAS], int centroLinha, int centroColuna, int altura) {
+    for (int i = 0; i < altura; i++) {
+        for (int j = -i; j <= i; j++) {
+            int linha = centroLinha + i;
+            int coluna = centroColuna + j;
+            if (linha >= 0 && linha < LINHAS && coluna >= 0 && coluna < COLUNAS) {
+                tabuleiro[linha][coluna] = 1; // Marca a área atingida
+            }
+        }
+    }
+}
+
 // Desafio Batalha Naval - MateCheck
 // Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 // Siga os comentários para implementar cada parte do desafio.
@@ -53,6 +95,30 @@ int main() {
     // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
     // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
 
+        // Duplicate Aventureiro block removed; the correct declarations for
+        // 'colunas' and 'tabuleiro' are provided later in the file.
+
+    // Nível Mestre - Habilidades Especiais com Matrizes
+    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
+    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
+    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+
+    // Exemplos de exibição das habilidades:
+    // Exemplo para habilidade em cone:
+    // 0 0 1 0 0
+    // 0 1 1 1 0
+    // 1 1 1 1 1
+    
+    // Exemplo para habilidade em octaedro:
+    // 0 0 1 0 0
+    // 0 1 1 1 0
+    // 0 0 1 0 0
+
+    // Exemplo para habilidade em cruz:
+    // 0 0 1 0 0
+    // 1 1 1 1 1
+    // 0 0 1 0 0
+
         char colunas[COLUNAS] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
         int tabuleiro[LINHAS][COLUNAS];
@@ -83,6 +149,13 @@ int main() {
         tabuleiro[8][1] = 3;
         tabuleiro[7][2] = 3;
 
+        desenharOctaedro(tabuleiro, 2, 2, 1);
+
+        desenharCruz(tabuleiro, 5, 2, 2);
+
+        desenharCone(tabuleiro, 0, 7, 4);
+        
+
         printf("JOGO DA BATALHA NAVAL \n");
         
         // Cabeçalho das colunas com letras A..J
@@ -101,26 +174,7 @@ int main() {
             printf("\n");
         }
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
-
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
 
     return 0;
 }
